@@ -72,10 +72,10 @@ EXPECTED_OUTPUT_WITHOUT_STAGE_MAPPING = [
 STAGE_MAPPING_1 =  {
      "new_referral": "Scheduling",
      "on_hold": "Scheduling",
-     "contacted": "Scheduling", 
-     "scheduled": "Scheduling", 
-     "in_review": "Review", 
-     "reviewed": "Review", 
+     "contacted": "Scheduling",
+     "scheduled": "Scheduling",
+     "in_review": "Review",
+     "reviewed": "Review",
      "complete": "Complete",
      "cancelled": "Complete",
      "archived": "Complete"
@@ -103,9 +103,9 @@ EXPECTED_OUTPUT_WITH_STAGE_MAPPING_1 = [
 STAGE_MAPPING_2 =  {
      "new_referral": "Processing",
      "on_hold": "Processing",
-     "contacted": "Processing", 
-     "scheduled": "Processing", 
-     "in_review": "Processing", 
+     "contacted": "Processing",
+     "scheduled": "Processing",
+     "in_review": "Processing",
      "reviewed": "Processing",
      "complete": "Complete",
      "cancelled": "Cancelled",
@@ -153,30 +153,30 @@ class StageChangeTestCase(APITestCase):
             utils.group_stage_change_event_counts(STAGE_MAPPING_2),
             EXPECTED_OUTPUT_WITH_STAGE_MAPPING_2
         )
-    
+
     def test_post_group_stage_change_events_action(self):
         user = User.objects.get(username='test_user')
         self.client.force_authenticate(user=user)
 
         response_without_mapping = self.client.post(
-            '/api/stage-change-events/group_stage_change_events/', 
-            {}, 
+            '/api/stage-change-events/group_stage_change_events/',
+            {},
             format='json'
         )
         self.assertEqual( response_without_mapping.status_code, 200)
-        self.assertUnorderedJsonEquivalence( 
-            response_without_mapping.data, 
+        self.assertUnorderedJsonEquivalence(
+            response_without_mapping.data,
             EXPECTED_OUTPUT_WITHOUT_STAGE_MAPPING
         )
 
         response_with_mapping = self.client.post(
-            '/api/stage-change-events/group_stage_change_events/', 
-            {'mapping': STAGE_MAPPING_1}, 
+            '/api/stage-change-events/group_stage_change_events/',
+            {'mapping': STAGE_MAPPING_1},
             format='json'
         )
         self.assertEqual( response_with_mapping.status_code, 200)
-        self.assertUnorderedJsonEquivalence( 
-            response_with_mapping.data, 
+        self.assertUnorderedJsonEquivalence(
+            response_with_mapping.data,
             EXPECTED_OUTPUT_WITH_STAGE_MAPPING_1
         )
 

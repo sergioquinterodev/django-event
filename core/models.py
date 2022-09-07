@@ -21,7 +21,7 @@ class Customer(TimestampMixin, models.Model):
 
 
 class Stage(TimestampMixin, models.Model):
-    name = models.CharField(max_length=500, null=True, blank=True) 
+    name = models.CharField(max_length=500, null=True, blank=True)
     slug = models.SlugField()
 
 
@@ -48,3 +48,7 @@ class StageChangeEvent(TimestampMixin, models.Model):
         blank=True,
         related_name="events",
     )
+
+class GroupStageChangeMapping(TimestampMixin, models.Model):
+    name = models.CharField(max_length=500, null=True, blank=True)
+    mapping = models.JSONField(null=True, blank=True)
